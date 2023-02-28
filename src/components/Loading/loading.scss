@@ -1,0 +1,36 @@
+.loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 64px;
+  height: 64px;
+  background-image: linear-gradient($color-grey 16px, transparent 0),
+    linear-gradient($color-pink 16px, transparent 0),
+    linear-gradient($color-pink 16px, transparent 0),
+    linear-gradient($color-grey 16px, transparent 0);
+  background-repeat: no-repeat;
+  background-position: left top, left bottom, right top, right bottom;
+  background-size: 16px 16px;
+  transform: translate(-50%, -50%);
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    width: 64px;
+    height: 64px;
+    transform: rotate(0deg);
+  }
+
+  50% {
+    width: 30px;
+    height: 30px;
+    transform: rotate(180deg);
+  }
+
+  100% {
+    width: 64px;
+    height: 64px;
+    transform: rotate(360deg);
+  }
+}

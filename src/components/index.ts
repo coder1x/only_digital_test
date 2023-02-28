@@ -1,6 +1,7 @@
 import { lazy } from 'react';
 
+import Loading from './Loading/Loading';
+
 const HistoricalEvents = lazy(() => import('./HistoricalEvents/HistoricalEvents'));
 
-// eslint-disable-next-line import/prefer-default-export
-export { HistoricalEvents };
+export { HistoricalEvents, Loading };

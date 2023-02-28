@@ -1,0 +1,22 @@
+.content {
+  width: 100%;
+
+  @include media-breakpoint-down($xxl_middle) {
+    @include padding-wrapper();
+  }
+
+  @include media-breakpoint-down($sm) {
+    @include padding-wrapper(true);
+  }
+
+  &__historical-events-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+
+    @include media-breakpoint-up($xxl_middle) {
+      @include convert-vw(padding-right, 160);
+    }
+  }
+}

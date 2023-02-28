@@ -1,5 +1,6 @@
 $min-wrapper: 319px;
 $max-wrapper: 1920px;
+$viewport-mix: 1920;
 
 $size-padding: 20px;
 $min-size-padding: 10px;
@@ -15,6 +16,7 @@ $lg_middle: 1099px;
 $lg: 1199px;
 $xl_middle: 1299px;
 $xl: 1440px;
+$xxl_middle: 1600px;
 $xxl: 1920px;
 
 //----------- COLORS -------------
@@ -23,14 +25,15 @@ $color-grey: #42567a;
 $color-blue: #3877ee;
 $color-lilac: #5d5fef;
 $color-pink: #ef5da8;
+$color-border: rgb(66 86 122 / 10%);
 
 $color-background: #f4f5f9;
 $color-white: #fff;
 $color-black: #000;
 //------------- FONTS ------------
 
-$font: "PTSans", Helvetica, Arial, sans-serif;
-$font-title: "PTSans", Helvetica, Arial, sans-serif;
+$font: 'PTSans', helvetica, arial, sans-serif;
+$font-title: 'PTSans', helvetica, arial, sans-serif;
 
 $font-size: 16;
 //-------------------------------

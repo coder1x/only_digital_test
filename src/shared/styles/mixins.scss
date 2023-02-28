@@ -3,6 +3,12 @@
 }
 //  @include font-rem(32);
 
+@mixin convert-vw($property, $size) {
+  #{$property}: #{($size / $viewport-mix) * 100}vw;
+}
+
+// @include convert-vw()
+
 @mixin max-row($row) {
   display: -webkit-box;
   -webkit-line-clamp: $row;
@@ -26,6 +32,8 @@
   }
 }
 
+//  @include media-breakpoint-down(){}
+
 @mixin media-breakpoint-between($min-width, $max-width) {
   @media (min-width: ($min-width + 1)) and (max-width: $max-width) {
     @content;
@@ -41,6 +49,8 @@
     padding-left: $min-size-padding;
   }
 }
+
+//  @include padding-wrapper()
 
 //-------------------------------
 @mixin absolute-center {

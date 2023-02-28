@@ -1,23 +1,25 @@
-$path: "../../assets/fonts/";
+$path: '../../assets/fonts/';
 
-$font-bold: "PTSans-Bold";
-$font-regular: "PTSans-Regular";
+$font-bold: 'PTSans-Bold';
+$font-regular: 'PTSans-Regular';
 
 @font-face {
-  font-family: "PTSans";
-  src: url("#{$path}#{$font-regular}.woff2") format("woff2"), url("#{$path}#{$font-regular}.woff") format("woff"),
-    url("#{$path}#{$font-regular}.ttf") format("truetype");
   font-weight: normal;
+  font-family: PTSans;
   font-style: normal;
+  src: url('#{$path}#{$font-regular}.woff2') format('woff2'),
+    url('#{$path}#{$font-regular}.woff') format('woff'),
+    url('#{$path}#{$font-regular}.ttf') format('truetype');
   font-display: swap;
 }
 
 @font-face {
-  font-family: "PTSans";
-  src: url("#{$path}#{$font-bold}.woff2") format("woff2"), url("#{$path}#{$font-bold}.woff") format("woff"),
-    url("#{$path}#{$font-bold}.ttf") format("truetype");
   font-weight: bold;
+  font-family: PTSans;
   font-style: normal;
+  src: url('#{$path}#{$font-bold}.woff2') format('woff2'),
+    url('#{$path}#{$font-bold}.woff') format('woff'),
+    url('#{$path}#{$font-bold}.ttf') format('truetype');
   font-display: swap;
 }
 
