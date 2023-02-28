@@ -1,0 +1,69 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "ecmaFeatures": {
+      "ts": true,
+      "tsx": true
+    },
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "jest",
+    "jest-react"
+  ],
+  "rules": {
+    "no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^data$|^value$|^id$|^object$|^options$"
+      }
+    ],
+    "no-debugger": "off",
+    "no-console": "off",
+    "no-param-reassign": "off",
+    "no-var": 1,
+    "camelcase": 1,
+    "no-nested-ternary": 1,
+    "no-template-curly-in-string": 1,
+    "no-self-compare": 1,
+    "import/no-unresolved": "off",
+    "import/extensions": "off",
+    "import/no-extraneous-dependencies": "off",
+    "no-new": "off",
+    "no-loss-of-precision": "off",
+    "nonblock-statement-body-position": "error",
+    "semi": [
+      1
+    ],
+    "max-len": [
+      "error",
+      {
+        "ignoreUrls": true,
+        "ignoreComments": true,
+        "ignoreRegExpLiterals": true,
+        "code": 100
+      }
+    ],
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/prefer-to-have-length": "warn",
+    "jest/valid-expect": "error"
+  },
+  "extends": [
+    "airbnb-base",
+    "react-app",
+    // "react-app/jest",
+    "plugin:prettier/recommended",
+    "plugin:jest-react/recommended"
+  ],
+  "env": {
+    "es2021": true,
+    "browser": true,
+    "node": true,
+    "commonjs": true,
+    "jest/globals": true
+  }
+}
