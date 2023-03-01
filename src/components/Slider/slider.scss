@@ -1,0 +1,86 @@
+$color-button-shadow: rgba(56, 119, 238, 0.1);
+
+.slider {
+  width: 100%;
+  position: relative;
+  padding-left: 80px;
+  padding-right: 80px;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+
+  &_visible {
+    opacity: 1;
+  }
+
+  &__event {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  &__year {
+    font-family: $font-date;
+    font-weight: 400;
+    font-size: 25px;
+    text-transform: uppercase;
+    color: $color-blue;
+    margin-bottom: 15px;
+  }
+  &__text {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 30px;
+    color: $color-grey;
+  }
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  position: absolute;
+  z-index: 2;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  box-shadow: 0px 0px 15px $color-button-shadow;
+  border: 0px;
+  border-radius: 50%;
+  background-color: $color-white;
+  padding: 0px;
+
+  &::before {
+    position: absolute;
+    content: "";
+    width: 6px;
+    height: 6px;
+    border: solid $color-blue;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+  }
+
+  &:disabled {
+    display: none;
+  }
+}
+
+.swiper-button-prev {
+  left: 23px;
+
+  &::before {
+    top: 16px;
+    left: 17px;
+    transform: rotate(135deg);
+  }
+}
+
+.swiper-button-next {
+  right: 38px;
+
+  &::before {
+    top: 16px;
+    left: 15px;
+    transform: rotate(-45deg);
+  }
+}

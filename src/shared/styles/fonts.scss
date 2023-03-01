@@ -1,25 +1,33 @@
-$path: '../../assets/fonts/';
+$path: "../../assets/fonts/";
 
-$font-bold: 'PTSans-Bold';
-$font-regular: 'PTSans-Regular';
+$font-bold: "PTSans-Bold";
+$font-regular: "PTSans-Regular";
+$font-BebasNeue: "BebasNeueRegular";
 
 @font-face {
-  font-weight: normal;
+  font-weight: 400;
   font-family: PTSans;
   font-style: normal;
-  src: url('#{$path}#{$font-regular}.woff2') format('woff2'),
-    url('#{$path}#{$font-regular}.woff') format('woff'),
-    url('#{$path}#{$font-regular}.ttf') format('truetype');
+  src: url("#{$path}#{$font-regular}.woff2") format("woff2"), url("#{$path}#{$font-regular}.woff") format("woff"),
+    url("#{$path}#{$font-regular}.ttf") format("truetype");
   font-display: swap;
 }
 
 @font-face {
-  font-weight: bold;
+  font-weight: 700;
   font-family: PTSans;
   font-style: normal;
-  src: url('#{$path}#{$font-bold}.woff2') format('woff2'),
-    url('#{$path}#{$font-bold}.woff') format('woff'),
-    url('#{$path}#{$font-bold}.ttf') format('truetype');
+  src: url("#{$path}#{$font-bold}.woff2") format("woff2"), url("#{$path}#{$font-bold}.woff") format("woff"),
+    url("#{$path}#{$font-bold}.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-weight: 400;
+  font-family: BebasNeue;
+  font-style: normal;
+  src: url("#{$path}#{$font-BebasNeue}.woff2") format("woff2"), url("#{$path}#{$font-BebasNeue}.woff") format("woff"),
+    url("#{$path}#{$font-BebasNeue}.ttf") format("truetype");
   font-display: swap;
 }
 

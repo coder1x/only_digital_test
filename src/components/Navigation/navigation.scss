@@ -2,8 +2,11 @@ $color-button-border: rgba(66, 86, 122, 0.5);
 
 .navigation {
   width: 100%;
+  grid-column: 1 / 2;
   display: grid;
-  grid-template-columns: minmax(120px, 1fr) 2fr;
+  grid-template-rows: 35px 50px;
+  grid-template-columns: repeat(2, 50px);
+  column-gap: 20px;
   padding-left: 80px;
 
   @include media-breakpoint-down($md_middle) {
@@ -12,20 +15,9 @@ $color-button-border: rgba(66, 86, 122, 0.5);
 
   @include media-breakpoint-down($sm_middle) {
     padding-left: 20px;
-  }
-
-  &__wrapper {
-    grid-column: 1 / 2;
-    display: grid;
-    grid-template-rows: 35px 50px;
-    grid-template-columns: repeat(2, 50px);
-    column-gap: 20px;
-
-    @include media-breakpoint-down($sm_middle) {
-      grid-template-columns: repeat(2, max-content);
-      grid-template-rows: repeat(2, max-content);
-      column-gap: 0px;
-    }
+    grid-template-columns: repeat(2, max-content);
+    grid-template-rows: repeat(2, max-content);
+    column-gap: 0px;
   }
 
   &__total-slides {
@@ -114,10 +106,5 @@ $color-button-border: rgba(66, 86, 122, 0.5);
       grid-row: 2 / 3;
       margin-left: 8.3px;
     }
-  }
-
-  &__list-dot {
-    grid-column: 2 / 3;
-    display: none;
   }
 }

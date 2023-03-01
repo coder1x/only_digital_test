@@ -30,25 +30,11 @@ const Navigation: FC<Props> = ({ listId, onChange }) => {
 
   return (
     <div className="navigation">
-      <div className="navigation__wrapper">
-        <span className="navigation__total-slides">{`${digital(count)}/${digital(
-          listId.length
-        )}`}</span>
-        <button
-          className="navigation__prev"
-          onClick={handleButtonPrevClick}
-          aria-label="Назад"></button>
-        <button
-          className="navigation__next"
-          onClick={handleButtonNextClick}
-          aria-label="Вперёд"></button>
-      </div>
-
-      <ol className="navigation__list-dot">
-        <li className="navigation__dot">
-          <button className="navigation__dot-button" aria-label="Slide 1"></button>
-        </li>
-      </ol>
+      <span className="navigation__total-slides">{`${digital(count)}/${digital(
+        listId.length
+      )}`}</span>
+      <button className="navigation__prev" onClick={handleButtonPrevClick} aria-label="Назад" />
+      <button className="navigation__next" onClick={handleButtonNextClick} aria-label="Вперёд" />
     </div>
   );
 };
