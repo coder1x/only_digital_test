@@ -10,7 +10,7 @@ const Main: FC = () => {
       <main className="content">
         <Suspense fallback={<Loading />}>
           <div className="content__historical-events-wrapper">
-            <HistoricalEvents />
+            <HistoricalEvents title="Исторические даты" />
           </div>
         </Suspense>
       </main>

@@ -1,6 +1,7 @@
 .historical-events {
   display: grid;
-  grid-template-columns: minmax(26.4375rem, 1fr) 2fr;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: repeat(5, max-content);
   width: 100%;
   max-width: 1440px;
   height: 100vh;
@@ -8,6 +9,18 @@
     linear-gradient(to right, transparent calc(50% - 1px), $color-border 50%, transparent 50%);
   border-right: 1px solid $color-border;
   border-left: 1px solid $color-border;
+
+  @include media-breakpoint-down($lg_middle) {
+    background: transparent;
+  }
+
+  @include media-breakpoint-down($md_middle) {
+    border: 0px;
+  }
+
+  @include media-breakpoint-down($sm_middle) {
+    padding-left: 20px;
+  }
 
   &__title {
     position: relative;
@@ -17,6 +30,23 @@
     margin-top: 170px;
     padding-left: 80px;
 
+    @include media-breakpoint-down($lg_middle) {
+      margin-top: 120px;
+      @include font-rem(36);
+    }
+
+    @include media-breakpoint-down($md_middle) {
+      margin-top: 80px;
+      padding-left: 40px;
+    }
+
+    @include media-breakpoint-down($sm_middle) {
+      margin-top: 59px;
+      padding-left: 20px;
+      font-size: 20px;
+      line-height: 120%;
+    }
+
     &::before {
       position: absolute;
       top: 10px;
@@ -25,6 +55,10 @@
       height: 89%;
       background: linear-gradient(180deg, $color-blue -5%, $color-pink 85%);
       content: "";
+
+      @include media-breakpoint-down($md_middle) {
+        background: transparent;
+      }
     }
   }
 

@@ -9,6 +9,10 @@
     @include padding-wrapper(true);
   }
 
+  @include media-breakpoint-down($sm_middle) {
+    padding: 0px;
+  }
+
   &__historical-events-wrapper {
     display: flex;
     flex-direction: row;
