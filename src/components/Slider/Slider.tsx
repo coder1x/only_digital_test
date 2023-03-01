@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
 
 import { Records } from '@store/index';
+import { Throttle } from '@helpers/index';
 
 type Props = {
   records: Records[];
@@ -10,7 +11,25 @@ type Props = {
 
 const Slider: FC<Props> = ({ records }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [between, setBetween] = useState(42);
+  const [slidesView, setSlidesView] = useState(3);
   const DURATION = 700;
+
+  useLayoutEffect(() => {
+    const resize = () => {
+      if (document.body.offsetWidth <= 991) {
+        setBetween(25);
+        setSlidesView(2);
+      } else {
+        setBetween(42);
+        setSlidesView(3);
+      }
+    };
+
+    new Throttle(resize);
+
+    resize();
+  }, []);
 
   useLayoutEffect(() => {
     setIsVisible(false);
@@ -23,8 +42,8 @@ const Slider: FC<Props> = ({ records }) => {
       <button className="swiper-button-prev" aria-label="Вперёд" />
       <Swiper
         modules={[Navigation]}
-        spaceBetween={42}
-        slidesPerView={3}
+        spaceBetween={between}
+        slidesPerView={slidesView}
         navigation={{
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',

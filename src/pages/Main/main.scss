@@ -1,5 +1,6 @@
 .content {
   width: 100%;
+  font-family: $font;
 
   @include media-breakpoint-down($xxl_middle) {
     @include padding-wrapper();
@@ -10,7 +11,7 @@
   }
 
   @include media-breakpoint-down($sm_middle) {
-    padding: 0px;
+    padding: 0;
   }
 
   &__historical-events-wrapper {

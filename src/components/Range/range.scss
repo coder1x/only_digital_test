@@ -1,11 +1,19 @@
+$color-from-mobile: #3877ee;
+$color-to-mobile: #f178b6;
+
 .range {
   padding-top: 87px;
   padding-bottom: 152px;
+  font-family: $font;
 
   @include convert-vw(padding-left, 217);
 
   @include media-breakpoint-down($xl_middle) {
     padding-left: 80px;
+  }
+
+  @include media-breakpoint-down($md) {
+    padding-bottom: 50px;
   }
 
   @include media-breakpoint-down($md_middle) {
@@ -14,24 +22,25 @@
 
   @include media-breakpoint-down($sm_middle) {
     padding-left: 20px;
+    padding-bottom: 36px;
   }
 
   &__from,
   &__to {
     font-weight: 700;
-    @include font-rem(200);
     line-height: 160px;
+    letter-spacing: -0.02em;
     text-align: center;
-    letter-spacing: -0.037em;
+    @include font-rem(200);
 
     @include media-breakpoint-down($lg_middle) {
       @include font-rem(120);
+
       line-height: 100px;
     }
 
     @include media-breakpoint-down($sm) {
       @include font-rem(90);
-      // line-height: 72px;
     }
 
     @include media-breakpoint-down($sm_middle) {
@@ -41,12 +50,20 @@
   }
 
   &__from {
-    color: #5d5fef;
+    color: $color-lilac;
+
+    @include media-breakpoint-down($sm) {
+      color: $color-from-mobile;
+    }
   }
 
   &__to {
-    color: #ef5da8;
-    margin-left: 112px;
+    margin-left: 94px;
+    color: $color-pink;
+
+    @include media-breakpoint-down($sm) {
+      color: $color-to-mobile;
+    }
 
     @include media-breakpoint-down($sm_middle) {
       margin-left: 80px;
