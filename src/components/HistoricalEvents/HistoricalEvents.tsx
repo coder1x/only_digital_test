@@ -1,6 +1,6 @@
-import { FC, useContext, useState } from 'react';
+import { FC, useContext, useState, useCallback, useMemo } from 'react';
 
-import { Context, Records } from '@store/index';
+import { Context, Records, HistoryData } from '@store/index';
 import { Navigation, Range, Slider } from '@components/index';
 
 type Props = {
@@ -8,19 +8,38 @@ type Props = {
 };
 
 const HistoricalEvents: FC<Props> = ({ title }) => {
-  const data = useContext(Context);
+  const emptyData = useMemo(() => {
+    return [];
+  }, []);
 
-  const [range, setRange] = useState<[number, number]>(data[0].range);
-  const [records, setRecords] = useState<Records[]>(data[0].records);
+  const data = useContext(Context) ?? emptyData;
 
-  const handleNavigationChange = (id: number) => {
-    const rangeDate = data.find((item) => item.id === id);
+  const slideData: HistoryData = data[0] ?? {};
+  let dataRange: [number, number] | null = null;
+  let dataRecords: Records[] | null = null;
 
-    if (rangeDate) {
-      setRange(rangeDate.range);
-      setRecords(rangeDate.records);
-    }
-  };
+  if ('range' in slideData) {
+    dataRange = slideData.range ?? [0, 0];
+  }
+
+  if ('records' in slideData) {
+    dataRecords = slideData.records ?? [];
+  }
+
+  const [range, setRange] = useState<[number, number]>(dataRange ?? [0, 0]);
+  const [records, setRecords] = useState<Records[]>(dataRecords ?? []);
+
+  const handleNavigationChange = useCallback(
+    (id: number) => {
+      const rangeDate = data.find((item) => item.id === id);
+
+      if (rangeDate) {
+        setRange(rangeDate.range);
+        setRecords(rangeDate.records);
+      }
+    },
+    [data]
+  );
 
   return (
     <section className="historical-events">
@@ -30,7 +49,7 @@ const HistoricalEvents: FC<Props> = ({ title }) => {
       </div>
       <div className="historical-events__spinner-wrapper"></div>
       <div className="historical-events__navigation-wrapper">
-        <Navigation onChange={handleNavigationChange} listId={data} />
+        <Navigation onChange={handleNavigationChange} listId={data ?? []} />
       </div>
       <div className="historical-events__slider-wrapper">
         <Slider records={records} />

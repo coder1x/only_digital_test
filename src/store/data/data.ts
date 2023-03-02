@@ -1,7 +1,7 @@
 /* eslint max-len: ["error", { "code": 200 }] */
 import { HistoryData } from '@store/index';
 
-const DATA: HistoryData[] = [
+const DATA: HistoryData[] | null = [
   {
     id: 1,
     title: 'Технологии',

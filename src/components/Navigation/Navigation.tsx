@@ -1,4 +1,4 @@
-import { useEffect, FC, useState } from 'react';
+import { useEffect, FC, useState, memo } from 'react';
 
 type Props = {
   listId: { id: number }[];
@@ -14,8 +14,10 @@ const Navigation: FC<Props> = ({ listId, onChange }) => {
   };
 
   useEffect(() => {
-    onChange(listId[count - 1].id);
-  }, [count, listId, onChange]);
+    if (lengthList > 0) {
+      onChange(listId[count - 1].id);
+    }
+  }, [count, lengthList, listId, onChange]);
 
   const handleButtonPrevClick = () => {
     if (count > 1) {
@@ -48,4 +50,4 @@ const Navigation: FC<Props> = ({ listId, onChange }) => {
   );
 };
 
-export default Navigation;
+export default memo(Navigation);
