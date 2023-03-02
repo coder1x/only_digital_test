@@ -41,8 +41,8 @@ $color-button-shadow: rgb(56 119 238 / 10%);
     color: $color-blue;
     font-weight: 400;
     font-size: 25px;
-    letter-spacing: 1px;
     font-family: $font-date;
+    letter-spacing: 1px;
     text-transform: uppercase;
 
     @include media-breakpoint-down($sm) {
@@ -52,10 +52,14 @@ $color-button-shadow: rgb(56 119 238 / 10%);
   }
 
   &__text {
+    display: -webkit-box;
+    overflow: hidden;
     color: $color-grey;
     font-weight: 400;
     font-size: 20px;
     line-height: 30px;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
 
     @include media-breakpoint-down($sm) {
       font-size: 14px;
@@ -84,7 +88,7 @@ $color-button-shadow: rgb(56 119 238 / 10%);
     height: 6px;
     border: solid $color-blue;
     border-width: 0 2px 2px 0;
-    content: "";
+    content: '';
   }
 
   &:disabled {

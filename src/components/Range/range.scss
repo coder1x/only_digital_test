@@ -21,8 +21,8 @@ $color-to-mobile: #f178b6;
   }
 
   @include media-breakpoint-down($sm_middle) {
-    padding-left: 20px;
     padding-bottom: 36px;
+    padding-left: 20px;
   }
 
   &__from,

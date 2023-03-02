@@ -77,7 +77,6 @@
     "eslint-plugin-jest-react": "^0.1.0",
     "focus-visible": "^5.2.0",
     "fox-favicon": "^1.0.0",
-    "gsap": "^3.11.4",
     "normalize.css": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
