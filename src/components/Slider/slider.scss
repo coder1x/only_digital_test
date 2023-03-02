@@ -1,28 +1,77 @@
 $color-button-shadow: rgb(56 119 238 / 10%);
 
 .slider {
-  position: relative;
-  display: flex;
-  align-items: center;
   width: 100%;
-  padding-right: 80px;
-  padding-left: 80px;
   font-family: $font;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
 
-  @include media-breakpoint-down($md) {
-    padding-right: 40px;
-    padding-left: 40px;
-  }
-
-  @include media-breakpoint-down($sm_middle) {
-    padding-right: 20px;
-    padding-left: 20px;
-  }
-
   &_visible {
     opacity: 1;
+  }
+
+  &__header {
+    display: none;
+
+    @include media-breakpoint-down($md) {
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 19px;
+    }
+  }
+
+  &__title {
+    margin-bottom: 33px;
+    font-size: 18px;
+
+    padding-left: 80px;
+
+    @include media-breakpoint-down($md) {
+      padding-left: 40px;
+    }
+
+    @include media-breakpoint-down($sm) {
+      font-size: 14px;
+    }
+
+    @include media-breakpoint-down($sm_middle) {
+      padding-left: 20px;
+    }
+  }
+
+  &__line {
+    width: 87%;
+    height: 1px;
+    background-color: #c7cdd9;
+
+    margin-left: 80px;
+
+    @include media-breakpoint-down($md) {
+      margin-left: 40px;
+    }
+
+    @include media-breakpoint-down($sm_middle) {
+      margin-left: 20px;
+    }
+  }
+
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    padding-right: 80px;
+    padding-left: 80px;
+
+    @include media-breakpoint-down($md) {
+      padding-right: 40px;
+      padding-left: 40px;
+    }
+
+    @include media-breakpoint-down($sm_middle) {
+      padding-right: 20px;
+      padding-left: 20px;
+    }
   }
 
   &__event {
@@ -88,7 +137,7 @@ $color-button-shadow: rgb(56 119 238 / 10%);
     height: 6px;
     border: solid $color-blue;
     border-width: 0 2px 2px 0;
-    content: '';
+    content: "";
   }
 
   &:disabled {

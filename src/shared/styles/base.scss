@@ -34,6 +34,12 @@ h1 {
   @include font-rem(56);
 }
 
+h2 {
+  font-weight: 700;
+  font-family: $font-title;
+  font-size: 20px;
+}
+
 img {
   height: auto;
 }
@@ -58,8 +64,8 @@ p {
 }
 
 .visually-hidden:not(:focus, :active),
-input[type='checkbox'].visually-hidden,
-input[type='radio'].visually-hidden {
+input[type="checkbox"].visually-hidden,
+input[type="radio"].visually-hidden {
   position: absolute;
   width: 1px;
   height: 1px;

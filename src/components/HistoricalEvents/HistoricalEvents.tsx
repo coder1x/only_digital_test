@@ -28,6 +28,7 @@ const HistoricalEvents: FC<Props> = ({ title }) => {
 
   const [range, setRange] = useState<[number, number]>(dataRange ?? [0, 0]);
   const [records, setRecords] = useState<Records[]>(dataRecords ?? []);
+  const [slideTitle, setSlideTitle] = useState('');
 
   const handleNavigationChange = useCallback(
     (id: number) => {
@@ -36,6 +37,7 @@ const HistoricalEvents: FC<Props> = ({ title }) => {
       if (rangeDate) {
         setRange(rangeDate.range);
         setRecords(rangeDate.records);
+        setSlideTitle(rangeDate.title);
       }
     },
     [data]
@@ -52,7 +54,7 @@ const HistoricalEvents: FC<Props> = ({ title }) => {
         <Navigation onChange={handleNavigationChange} listId={data ?? []} />
       </div>
       <div className="historical-events__slider-wrapper">
-        <Slider records={records} />
+        <Slider records={records} title={slideTitle} />
       </div>
     </section>
   );
