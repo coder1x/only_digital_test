@@ -1,12 +1,13 @@
 import { useEffect, FC, useState, memo } from 'react';
 
 type Props = {
+  currentSlide?: number;
   listId: { id: number }[];
   onChange: (id: number) => void;
 };
 
-const Navigation: FC<Props> = ({ listId, onChange }) => {
-  const [count, setCount] = useState(1);
+const Navigation: FC<Props> = ({ listId, onChange, currentSlide = 1 }) => {
+  const [count, setCount] = useState(currentSlide);
   const lengthList = listId.length;
 
   const digital = (num: number) => {
@@ -18,6 +19,10 @@ const Navigation: FC<Props> = ({ listId, onChange }) => {
       onChange(listId[count - 1].id);
     }
   }, [count, lengthList, listId, onChange]);
+
+  useEffect(() => {
+    setCount(currentSlide);
+  }, [currentSlide]);
 
   const handleButtonPrevClick = () => {
     if (count > 1) {

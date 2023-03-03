@@ -1,7 +1,7 @@
 import { FC, useContext, useState, useCallback, useMemo } from 'react';
 
 import { Context, Records, HistoryData } from '@store/index';
-import { Navigation, Range, Slider } from '@components/index';
+import { Navigation, Range, Slider, Spinner } from '@components/index';
 
 type Props = {
   title: string;
@@ -29,6 +29,7 @@ const HistoricalEvents: FC<Props> = ({ title }) => {
   const [range, setRange] = useState<[number, number]>(dataRange ?? [0, 0]);
   const [records, setRecords] = useState<Records[]>(dataRecords ?? []);
   const [slideTitle, setSlideTitle] = useState('');
+  const [currentSlide, setCurrentSlide] = useState(1);
 
   const handleNavigationChange = useCallback(
     (id: number) => {
@@ -43,15 +44,31 @@ const HistoricalEvents: FC<Props> = ({ title }) => {
     [data]
   );
 
+  const handleSpinnerChange = (id: number) => {
+    const index = data.findIndex((item) => item.id === id);
+
+    if (index >= 0) {
+      setCurrentSlide(index + 1);
+    }
+
+    handleNavigationChange(id);
+  };
+
   return (
     <section className="historical-events">
       <h1 className="historical-events__title">{title}</h1>
       <div className="historical-events__range-wrapper">
         <Range range={range} delay={80} />
       </div>
-      <div className="historical-events__spinner-wrapper"></div>
+      <div className="historical-events__spinner-wrapper">
+        <Spinner onChange={handleSpinnerChange} list={data ?? []} />
+      </div>
       <div className="historical-events__navigation-wrapper">
-        <Navigation onChange={handleNavigationChange} listId={data ?? []} />
+        <Navigation
+          onChange={handleNavigationChange}
+          listId={data ?? []}
+          currentSlide={currentSlide}
+        />
       </div>
       <div className="historical-events__slider-wrapper">
         <Slider records={records} title={slideTitle} />
