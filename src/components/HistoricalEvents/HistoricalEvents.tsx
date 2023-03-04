@@ -30,15 +30,21 @@ const HistoricalEvents: FC<Props> = ({ title }) => {
   const [records, setRecords] = useState<Records[]>(dataRecords ?? []);
   const [slideTitle, setSlideTitle] = useState('');
   const [currentSlide, setCurrentSlide] = useState(1);
+  const [currentSlideSpinner, setCurrentSlideSpinner] = useState(1);
 
   const handleNavigationChange = useCallback(
     (id: number) => {
-      const rangeDate = data.find((item) => item.id === id);
+      const index = data.findIndex((item) => item.id === id);
+      const rangeDate = data[index];
 
       if (rangeDate) {
         setRange(rangeDate.range);
         setRecords(rangeDate.records);
         setSlideTitle(rangeDate.title);
+      }
+
+      if (index >= 0) {
+        setCurrentSlideSpinner(index + 1);
       }
     },
     [data]
@@ -61,7 +67,7 @@ const HistoricalEvents: FC<Props> = ({ title }) => {
         <Range range={range} delay={80} />
       </div>
       <div className="historical-events__spinner-wrapper">
-        <Spinner onChange={handleSpinnerChange} list={data ?? []} />
+        <Spinner onChange={handleSpinnerChange} current={currentSlideSpinner} list={data ?? []} />
       </div>
       <div className="historical-events__navigation-wrapper">
         <Navigation

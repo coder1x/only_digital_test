@@ -6,7 +6,12 @@
   width: 100%;
   max-width: 1440px;
   font-family: $font;
-  background: linear-gradient(to bottom, transparent calc(51.8vh - 1px), $color-border 51.8vh, transparent 51.8vh),
+  background: linear-gradient(
+      to bottom,
+      transparent calc(51.8vh - 1px),
+      $color-border 51.8vh,
+      transparent 51.8vh
+    ),
     linear-gradient(to right, transparent calc(50% - 1px), $color-border 50%, transparent 50%);
   border-right: 1px solid $color-border;
   border-left: 1px solid $color-border;
@@ -51,7 +56,7 @@
       width: 5px;
       height: 89%;
       background: linear-gradient(180deg, $color-blue -5%, $color-pink 85%);
-      content: "";
+      content: '';
 
       @include media-breakpoint-down($lg_middle) {
         top: 2px;
@@ -73,16 +78,29 @@
     }
 
     @include media-breakpoint-down($sm) {
-      padding-bottom: 0px;
+      padding-bottom: 0;
     }
   }
 
   &__spinner-wrapper {
-    z-index: 2;
     position: absolute;
     top: 42.3%;
     left: 50%;
+    z-index: 2;
     transform: translate(-50%, -50%);
+
+    @include media-breakpoint-down($md) {
+      position: unset;
+      display: grid;
+      grid-row: 5 / 6;
+      grid-column: 2 / 3;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      margin-left: -29px;
+      padding-top: 8px;
+      transform: unset;
+    }
   }
 
   &__navigation-wrapper {
@@ -91,7 +109,7 @@
 
     @include media-breakpoint-down($md) {
       grid-row: 5 / 6;
-      grid-column: 1 / 3;
+      grid-column: 1 / 2;
       padding-bottom: 13px;
     }
   }
@@ -100,17 +118,16 @@
     position: relative;
     grid-row: 5 / 6;
     grid-column: 1 / 3;
+    height: 353px;
     padding-top: 56px;
     padding-bottom: 104px;
-    height: 353px;
 
     @include media-breakpoint-down($md) {
       grid-row: 4 / 5;
       grid-column: 1 / 3;
+      height: 310px;
       padding-top: 19px;
       padding-bottom: 50px;
-
-      height: 310px;
     }
 
     @include media-breakpoint-down($sm) {
@@ -118,8 +135,8 @@
     }
 
     @include media-breakpoint-down($sm_middle) {
-      padding-bottom: 0;
       height: 265px;
+      padding-bottom: 0;
     }
   }
 }

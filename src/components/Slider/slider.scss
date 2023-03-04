@@ -1,4 +1,5 @@
 $color-button-shadow: rgb(56 119 238 / 10%);
+$background-line: #c7cdd9;
 
 .slider {
   width: 100%;
@@ -22,9 +23,8 @@ $color-button-shadow: rgb(56 119 238 / 10%);
 
   &__title {
     margin-bottom: 33px;
-    font-size: 18px;
-
     padding-left: 80px;
+    font-size: 18px;
 
     @include media-breakpoint-down($md) {
       padding-left: 40px;
@@ -42,9 +42,8 @@ $color-button-shadow: rgb(56 119 238 / 10%);
   &__line {
     width: 87%;
     height: 1px;
-    background-color: #c7cdd9;
-
     margin-left: 80px;
+    background-color: $background-line;
 
     @include media-breakpoint-down($md) {
       margin-left: 40px;
@@ -56,10 +55,10 @@ $color-button-shadow: rgb(56 119 238 / 10%);
   }
 
   &__wrapper {
+    position: relative;
     display: flex;
     align-items: center;
     width: 100%;
-    position: relative;
     padding-right: 80px;
     padding-left: 80px;
 
@@ -137,7 +136,7 @@ $color-button-shadow: rgb(56 119 238 / 10%);
     height: 6px;
     border: solid $color-blue;
     border-width: 0 2px 2px 0;
-    content: "";
+    content: '';
   }
 
   &:disabled {
