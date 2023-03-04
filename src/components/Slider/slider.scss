@@ -136,11 +136,16 @@ $background-line: #c7cdd9;
     height: 6px;
     border: solid $color-blue;
     border-width: 0 2px 2px 0;
-    content: '';
+    content: "";
   }
 
   &:disabled {
     display: none;
+  }
+
+  &:focus {
+    outline: 2px solid $color-pink;
+    outline-offset: 4px;
   }
 
   @include media-breakpoint-down($md) {

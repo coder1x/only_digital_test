@@ -30,6 +30,7 @@ const Range: FC<Props> = ({ range, delay = 100 }) => {
 
   return (
     <div className="range">
+      <h2 className="visually-hidden">Временной отрезок</h2>
       <span className="range__from">{from}</span>
       <span className="range__to">{to}</span>
     </div>

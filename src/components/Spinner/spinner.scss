@@ -65,6 +65,11 @@ $color-spinner-border: rgb(66 86 122 / 20%);
         }
       }
     }
+
+    &:focus {
+      outline: 2px solid $color-pink;
+      outline-offset: 4px;
+    }
   }
 
   &__dot-number {
