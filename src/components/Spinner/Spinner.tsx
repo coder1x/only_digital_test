@@ -23,7 +23,7 @@ const Spinner: FC<Props> = ({ onChange, list, transitionDurationRatio = 8, curre
   const currentButton = useRef<HTMLButtonElement | null>(null);
 
   const [config, setConfig] = useState<Config | null>(null);
-  const [bodyWidthMobile, setBodyWidthMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const init = () => {
     const spinnerElement: HTMLDivElement | null = spinnerRef.current;
@@ -44,7 +44,7 @@ const Spinner: FC<Props> = ({ onChange, list, transitionDurationRatio = 8, curre
   };
 
   const resize = () => {
-    const bodyWidth = document.body.offsetWidth;
+    const windowInnerWidth = window.innerWidth;
     const spinnerElement: HTMLDivElement | null = spinnerRef.current;
 
     if (!(spinnerElement instanceof HTMLDivElement)) {
@@ -54,28 +54,30 @@ const Spinner: FC<Props> = ({ onChange, list, transitionDurationRatio = 8, curre
     spinnerElement.style.transition = '';
     spinnerElement.style.transform = '';
 
-    if (bodyWidth <= 991) {
+    const dots = spinnerElement.children;
+
+    toggleTitle(false);
+
+    Array.from(dots).forEach((dot) => {
+      const element = dot as HTMLButtonElement;
+
+      element.style.transition = '';
+      element.style.transform = '';
+      element.style.opacity = '1';
+    });
+
+    if (windowInnerWidth <= 990) {
       spinnerElement.style.width = '';
       spinnerElement.style.height = '';
-      const dots = spinnerElement.children;
-
-      toggleTitle(false);
-
-      Array.from(dots).forEach((dot) => {
-        const element = dot as HTMLButtonElement;
-
-        element.style.transform = '';
-        element.style.opacity = '1';
-      });
 
       init();
-      setBodyWidthMobile(true);
+      setIsMobile(true);
       return false;
     }
 
-    setBodyWidthMobile(false);
+    setIsMobile(false);
 
-    if (bodyWidth <= 1200) {
+    if (windowInnerWidth <= 1200) {
       spinnerElement.style.width = '400px';
       spinnerElement.style.height = '400px';
     } else {
@@ -137,10 +139,10 @@ const Spinner: FC<Props> = ({ onChange, list, transitionDurationRatio = 8, curre
   };
 
   useLayoutEffect(() => {
-    if (config && !bodyWidthMobile) {
+    if (config && !isMobile) {
       setPositionDot();
     }
-  }, [config, bodyWidthMobile]);
+  }, [config, isMobile]);
 
   useLayoutEffect(() => {
     if (current) {
@@ -278,7 +280,7 @@ const Spinner: FC<Props> = ({ onChange, list, transitionDurationRatio = 8, curre
         onChange(parseInt(button.getAttribute('data-id') ?? '1', 10));
       }
 
-      if (bodyWidthMobile) {
+      if (isMobile) {
         toggleVisibleButton(true);
       } else {
         rotate(button);
