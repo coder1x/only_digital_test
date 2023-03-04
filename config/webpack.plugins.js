@@ -163,10 +163,6 @@ plugins.push(
   })
 );
 
-plugins.push(
-  new webpack.EnvironmentPlugin(['URL_API'])
-);
-
 module.exports = {
   plugins: plugins,
 };
