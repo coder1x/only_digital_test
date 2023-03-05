@@ -1,4 +1,4 @@
-import { FC, useLayoutEffect, useState } from 'react';
+import { FC, useLayoutEffect, useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
 
@@ -6,24 +6,30 @@ import { Records } from '@store/index';
 import { Throttle } from '@helpers/index';
 
 type Props = {
+  delay?: number;
   title?: string;
   records: Records[];
 };
 
-const Slider: FC<Props> = ({ records, title = '' }) => {
+const Slider: FC<Props> = ({ records, title = '', delay = 700 }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [between, setBetween] = useState(42);
-  const [slidesView, setSlidesView] = useState(3);
-  const DURATION = 700;
+  const [config, setConfig] = useState({
+    between: 42,
+    slidesView: 3,
+  });
 
   useLayoutEffect(() => {
     const resize = () => {
-      if (document.body.offsetWidth <= 991) {
-        setBetween(25);
-        setSlidesView(2);
+      if (window.innerWidth <= 990) {
+        setConfig({
+          between: 25,
+          slidesView: 2,
+        });
       } else {
-        setBetween(42);
-        setSlidesView(3);
+        setConfig({
+          between: 42,
+          slidesView: 3,
+        });
       }
     };
 
@@ -32,10 +38,10 @@ const Slider: FC<Props> = ({ records, title = '' }) => {
     resize();
   }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setIsVisible(false);
-    setTimeout(() => setIsVisible(true), DURATION);
-  }, [records]);
+    setTimeout(() => setIsVisible(true), delay);
+  }, [delay, records]);
 
   return (
     <div className={`slider${isVisible ? ' slider_visible' : ''}`}>
@@ -49,8 +55,8 @@ const Slider: FC<Props> = ({ records, title = '' }) => {
         <button className="swiper-button-prev" aria-label="Вперёд" />
         <Swiper
           modules={[Navigation]}
-          spaceBetween={between}
-          slidesPerView={slidesView}
+          spaceBetween={config.between}
+          slidesPerView={config.slidesView}
           navigation={{
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',

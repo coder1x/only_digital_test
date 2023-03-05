@@ -69,15 +69,18 @@ const HistoricalEvents: FC<Props> = ({ title, minSlide = 2, maxSlide = 6 }) => {
     [data]
   );
 
-  const handleSpinnerChange = (id: number) => {
-    const index = data.findIndex((item) => item.id === id);
+  const handleSpinnerChange = useCallback(
+    (id: number) => {
+      const index = data.findIndex((item) => item.id === id);
 
-    if (index >= 0) {
-      setCurrentSlide(index + 1);
-    }
+      if (index >= 0) {
+        setCurrentSlide(index + 1);
+      }
 
-    handleNavigationChange(id);
-  };
+      handleNavigationChange(id);
+    },
+    [data, handleNavigationChange]
+  );
 
   return (
     <>

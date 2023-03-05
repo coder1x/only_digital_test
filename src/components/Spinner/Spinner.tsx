@@ -1,4 +1,4 @@
-import { FC, useLayoutEffect, useEffect, MouseEvent, useRef, useState } from 'react';
+import { FC, useCallback, useEffect, MouseEvent, useRef, useState, memo } from 'react';
 
 import { Throttle } from '@helpers/index';
 
@@ -19,6 +19,14 @@ type Config = {
   singleAngle: number;
 };
 
+type Position = {
+  configData: Config | null;
+  shift?: number;
+  defaultAngleArg: number;
+  toggleTitleArg: (value: boolean) => void;
+  toggleVisibleButtonArg: (value: boolean) => void;
+};
+
 const Spinner: FC<Props> = ({
   onChange,
   list,
@@ -32,7 +40,7 @@ const Spinner: FC<Props> = ({
   const [config, setConfig] = useState<Config | null>(null);
   const [isMobile, setIsMobile] = useState(false);
 
-  const init = () => {
+  const init = useCallback(() => {
     const spinnerElement: HTMLDivElement | null = spinnerRef.current;
 
     if (spinnerElement instanceof HTMLDivElement) {
@@ -48,9 +56,35 @@ const Spinner: FC<Props> = ({
         singleAngle: 360 / length,
       });
     }
+  }, []);
+
+  const toggle = (element: HTMLSpanElement, className: string, isVisible: boolean) => {
+    const { classList } = element;
+
+    if (isVisible) {
+      classList.add(className);
+    } else {
+      classList.remove(className);
+    }
   };
 
-  const resize = () => {
+  const toggleTitle = useCallback((isVisible: boolean) => {
+    const title = currentButton.current?.querySelector('.spinner__dot-title');
+
+    if (title instanceof HTMLSpanElement) {
+      toggle(title, 'spinner__dot-title_visible', isVisible);
+    }
+  }, []);
+
+  const toggleVisibleButton = useCallback((isVisible: boolean) => {
+    const dotNumber = currentButton.current?.querySelector('.spinner__dot-number');
+
+    if (dotNumber instanceof HTMLSpanElement) {
+      toggle(dotNumber, 'spinner__dot-number_visible', isVisible);
+    }
+  }, []);
+
+  const resize = useCallback(() => {
     const windowInnerWidth = window.innerWidth;
     const spinnerElement: HTMLDivElement | null = spinnerRef.current;
 
@@ -95,67 +129,84 @@ const Spinner: FC<Props> = ({
     init();
 
     return true;
-  };
+  }, [init, toggleTitle]);
 
   useEffect(() => {
     resize();
     new Throttle(resize);
-  }, []);
+  }, [resize]);
 
   const radians = (degrees: number) => {
     return (degrees * Math.PI) / 180;
   };
 
-  const setPositionDot = (shift = 0) => {
-    if (!config) {
-      return false;
-    }
-
-    const { dots, spinnerElement, singleAngle, dotRadius, spinnerRadius, dotsAmount } = config;
-
-    spinnerElement.style.transform = `rotate(${shift}deg)`;
-
-    let angle = defaultAngle - singleAngle;
-
-    dots.forEach((dot, index) => {
-      const element = dot as HTMLElement;
-
-      angle += singleAngle;
-      if (angle >= 360) {
-        angle -= 360;
+  const setPositionDot = useCallback(
+    ({
+      configData = null,
+      shift = 0,
+      defaultAngleArg = 0,
+      // eslint-disable-next-line prettier/prettier
+      toggleTitleArg = (value: boolean) => { },
+      // eslint-disable-next-line prettier/prettier
+      toggleVisibleButtonArg = (value: boolean) => { },
+    }: Position) => {
+      if (!configData) {
+        return false;
       }
 
-      const positionY = Math.sin(radians(angle)) * spinnerRadius - dotRadius;
-      const positionX = Math.cos(radians(angle)) * spinnerRadius - dotRadius;
+      const { dots, spinnerElement, singleAngle, dotRadius, spinnerRadius, dotsAmount } =
+        configData;
 
-      const rotateText = ` rotate(-${shift}deg)`;
-      const dataPositionValue = index === 0 ? dotsAmount - 1 : index - 1;
+      spinnerElement.style.transform = `rotate(${shift}deg)`;
 
-      element.setAttribute('data-position', String(dataPositionValue));
+      let angle = defaultAngleArg - singleAngle;
 
-      element.style.transform = `translate3d(${positionX}px, ${positionY}px, 0)${rotateText}`;
+      dots.forEach((dot, index) => {
+        const element = dot as HTMLElement;
 
-      element.style.opacity = '1';
-    });
+        angle += singleAngle;
+        if (angle >= 360) {
+          angle -= 360;
+        }
 
-    toggleTitle(false);
-    toggleVisibleButton(false);
+        const positionY = Math.sin(radians(angle)) * spinnerRadius - dotRadius;
+        const positionX = Math.cos(radians(angle)) * spinnerRadius - dotRadius;
 
-    currentButton.current = dots.at(-1) as HTMLButtonElement;
+        const rotateText = ` rotate(-${shift}deg)`;
+        const dataPositionValue = index === 0 ? dotsAmount - 1 : index - 1;
 
-    toggleTitle(true);
-    toggleVisibleButton(true);
+        element.setAttribute('data-position', String(dataPositionValue));
 
-    return true;
-  };
+        element.style.transform = `translate3d(${positionX}px, ${positionY}px, 0)${rotateText}`;
 
-  useLayoutEffect(() => {
+        element.style.opacity = '1';
+      });
+
+      toggleTitleArg(false);
+      toggleVisibleButtonArg(false);
+
+      currentButton.current = dots.at(-1) as HTMLButtonElement;
+
+      toggleTitleArg(true);
+      toggleVisibleButtonArg(true);
+
+      return true;
+    },
+    []
+  );
+
+  useEffect(() => {
     if (config && !isMobile) {
-      setPositionDot();
+      setPositionDot({
+        configData: config,
+        defaultAngleArg: defaultAngle,
+        toggleTitleArg: toggleTitle,
+        toggleVisibleButtonArg: toggleVisibleButton,
+      });
     }
-  }, [config, isMobile]);
+  }, [config, defaultAngle, isMobile, setPositionDot, toggleTitle, toggleVisibleButton]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (current) {
       if (!config) {
         return;
@@ -192,32 +243,6 @@ const Spinner: FC<Props> = ({
     });
 
     return true;
-  };
-
-  const toggle = (element: HTMLSpanElement, className: string, isVisible: boolean) => {
-    const { classList } = element;
-
-    if (isVisible) {
-      classList.add(className);
-    } else {
-      classList.remove(className);
-    }
-  };
-
-  const toggleTitle = (isVisible: boolean) => {
-    const title = currentButton.current?.querySelector('.spinner__dot-title');
-
-    if (title instanceof HTMLSpanElement) {
-      toggle(title, 'spinner__dot-title_visible', isVisible);
-    }
-  };
-
-  const toggleVisibleButton = (isVisible: boolean) => {
-    const dotNumber = currentButton.current?.querySelector('.spinner__dot-number');
-
-    if (dotNumber instanceof HTMLSpanElement) {
-      toggle(dotNumber, 'spinner__dot-number_visible', isVisible);
-    }
   };
 
   const rotate = (button: HTMLButtonElement) => {
@@ -327,4 +352,4 @@ const Spinner: FC<Props> = ({
   );
 };
 
-export default Spinner;
+export default memo(Spinner);
