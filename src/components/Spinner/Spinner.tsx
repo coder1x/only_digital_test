@@ -224,18 +224,15 @@ const Spinner: FC<Props> = ({
 
     const { spinnerElement, dots, singleAngle } = config;
 
-    const position = parseInt(button.getAttribute('data-position') ?? '0', 10);
+    const position = parseInt(button.getAttribute('data-position') ?? '0', 10) + 1;
 
-    let positionShift = 360 - singleAngle * (position + 1);
+    let positionShift = 360 - singleAngle * position;
 
-    let steps = positionShift / singleAngle;
-    setAttributePosition(steps);
+    setAttributePosition(positionShift / singleAngle);
 
     if (positionShift > 180) {
       positionShift = (360 - positionShift) * -1;
     }
-
-    steps = steps <= 0 ? transitionDurationRatio : steps * transitionDurationRatio;
 
     const degSearch = spinnerElement.style.transform.match(/(-?\d+)/g);
     let newDeg = 0;
