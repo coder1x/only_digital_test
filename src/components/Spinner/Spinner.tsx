@@ -1,31 +1,7 @@
 import { FC, useCallback, useEffect, MouseEvent, useRef, useState, memo } from 'react';
 
 import { Throttle } from '@helpers/index';
-
-type Props = {
-  current?: number;
-  defaultAngle?: number;
-  transitionDurationRatio?: number;
-  list: { id: number; title: string }[];
-  onChange: (id: number) => void;
-};
-
-type Config = {
-  spinnerElement: HTMLDivElement;
-  dots: HTMLButtonElement[];
-  dotsAmount: number;
-  spinnerRadius: number;
-  dotRadius: number;
-  singleAngle: number;
-};
-
-type Position = {
-  configData: Config | null;
-  shift?: number;
-  defaultAngleArg: number;
-  toggleTitleArg: (value: boolean) => void;
-  toggleVisibleButtonArg: (value: boolean) => void;
-};
+import { Props, Config, Position } from './spinnerType';
 
 const Spinner: FC<Props> = ({
   onChange,
@@ -213,11 +189,7 @@ const Spinner: FC<Props> = ({
       }
 
       const { dots } = config;
-
-      const button = dots.find((dot) => {
-        const index = parseInt(dot.getAttribute('data-index') ?? '0', 10);
-        return index + 1 === current;
-      });
+      const button = dots[current - 1];
 
       if (button instanceof HTMLButtonElement) {
         button.click();
@@ -252,14 +224,7 @@ const Spinner: FC<Props> = ({
 
     const { spinnerElement, dots, singleAngle } = config;
 
-    const index = parseInt(button.getAttribute('data-index') ?? '0', 10);
     const position = parseInt(button.getAttribute('data-position') ?? '0', 10);
-
-    let shift = 360 - singleAngle * (index + 1);
-
-    if (shift >= 360) {
-      shift -= 360;
-    }
 
     let positionShift = 360 - singleAngle * (position + 1);
 
@@ -340,7 +305,6 @@ const Spinner: FC<Props> = ({
               onClick={handleButtonClick}
               className="spinner__dot"
               data-id={item.id}
-              data-index={index}
               data-position={index}
               aria-label={item.title}>
               <span className="spinner__dot-number">{index + 1}</span>
