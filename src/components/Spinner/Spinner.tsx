@@ -4,6 +4,7 @@ import { Throttle } from '@helpers/index';
 
 type Props = {
   current?: number;
+  defaultAngle?: number;
   transitionDurationRatio?: number;
   list: { id: number; title: string }[];
   onChange: (id: number) => void;
@@ -18,7 +19,13 @@ type Config = {
   singleAngle: number;
 };
 
-const Spinner: FC<Props> = ({ onChange, list, transitionDurationRatio = 8, current = 1 }) => {
+const Spinner: FC<Props> = ({
+  onChange,
+  list,
+  transitionDurationRatio = 8,
+  current = 1,
+  defaultAngle = 300,
+}) => {
   const spinnerRef = useRef<HTMLDivElement | null>(null);
   const currentButton = useRef<HTMLButtonElement | null>(null);
 
@@ -104,14 +111,16 @@ const Spinner: FC<Props> = ({ onChange, list, transitionDurationRatio = 8, curre
       return false;
     }
 
-    const { dots, spinnerElement, singleAngle, dotRadius, spinnerRadius } = config;
+    const { dots, spinnerElement, singleAngle, dotRadius, spinnerRadius, dotsAmount } = config;
 
     spinnerElement.style.transform = `rotate(${shift}deg)`;
 
+    let angle = defaultAngle - singleAngle;
+
     dots.forEach((dot, index) => {
       const element = dot as HTMLElement;
-      let angle = singleAngle * index;
 
+      angle += singleAngle;
       if (angle >= 360) {
         angle -= 360;
       }
@@ -120,7 +129,9 @@ const Spinner: FC<Props> = ({ onChange, list, transitionDurationRatio = 8, curre
       const positionX = Math.cos(radians(angle)) * spinnerRadius - dotRadius;
 
       const rotateText = ` rotate(-${shift}deg)`;
-      element.setAttribute('data-position', String(index));
+      const dataPositionValue = index === 0 ? dotsAmount - 1 : index - 1;
+
+      element.setAttribute('data-position', String(dataPositionValue));
 
       element.style.transform = `translate3d(${positionX}px, ${positionY}px, 0)${rotateText}`;
 

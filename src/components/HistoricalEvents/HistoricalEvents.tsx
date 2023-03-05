@@ -30,7 +30,7 @@ const HistoricalEvents: FC<Props> = ({ title, minSlide = 2, maxSlide = 6 }) => {
   if (slideAmount < minSlide) {
     isLoading = true;
   } else if (slideAmount > maxSlide) {
-    data = data.slice(0, maxSlide);
+    data = data.splice(maxSlide - 1, slideAmount - maxSlide);
   }
 
   const slideData: HistoryData = data[0] ?? {};
