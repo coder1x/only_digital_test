@@ -9,6 +9,13 @@ $background-line: #c7cdd9;
 
   &_visible {
     opacity: 1;
+
+    @include media-breakpoint-down($md) {
+      animation-name: SliderAnimation;
+      animation-duration: 0.3s;
+      animation-fill-mode: both;
+      animation-timing-function: cubic-bezier(0.65, 0.05, 0.36, 1);
+    }
   }
 
   &__header {
@@ -176,5 +183,11 @@ $background-line: #c7cdd9;
 .swiper-slide {
   @include media-breakpoint-down($md) {
     min-width: 166px;
+  }
+}
+
+@keyframes SliderAnimation {
+  from {
+    transform: translateY(15%);
   }
 }

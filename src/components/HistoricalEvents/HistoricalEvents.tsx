@@ -18,6 +18,9 @@ const HistoricalEvents: FC<Props> = ({ title, minSlide = 2, maxSlide = 6 }) => {
   let data = useContext(Context) ?? emptyData;
   const slideAmount = data.length;
 
+  minSlide = Math.abs(minSlide);
+  maxSlide = Math.abs(maxSlide);
+
   if (minSlide > maxSlide) {
     const temp = minSlide;
     minSlide = maxSlide;
