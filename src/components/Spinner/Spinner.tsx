@@ -230,7 +230,9 @@ const Spinner: FC<Props> = ({ onChange, list, transitionDurationRatio = 8, curre
     let steps = positionShift / singleAngle;
     setAttributePosition(steps);
 
-    if (positionShift > 180) positionShift = (360 - positionShift) * -1;
+    if (positionShift > 180) {
+      positionShift = (360 - positionShift) * -1;
+    }
 
     steps = steps <= 0 ? transitionDurationRatio : steps * transitionDurationRatio;
 
@@ -242,6 +244,10 @@ const Spinner: FC<Props> = ({ onChange, list, transitionDurationRatio = 8, curre
 
       if (newDeg >= 300) {
         newDeg -= 360;
+        positionShift = 360 - positionShift;
+      } else if (newDeg <= -300) {
+        newDeg += 360;
+        positionShift = -360 - positionShift;
       }
     }
 

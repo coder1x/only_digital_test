@@ -12,6 +12,14 @@ const Main: FC = () => {
           <div className="content__historical-events-wrapper">
             <HistoricalEvents title="Исторические даты" />
           </div>
+
+          {/* Несколько компонентов на одной странице работают независимо друг от друга. */}
+          {/* <div className="content__historical-events-wrapper">
+            <HistoricalEvents title="Исторические даты" />
+          </div>
+          <div className="content__historical-events-wrapper">
+            <HistoricalEvents title="Исторические даты" />
+          </div> */}
         </Suspense>
       </main>
     </Context.Provider>

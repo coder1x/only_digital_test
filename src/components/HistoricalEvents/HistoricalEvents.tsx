@@ -1,18 +1,34 @@
 import { FC, useContext, useState, useCallback, useMemo } from 'react';
 
 import { Context, Records, HistoryData } from '@store/index';
-import { Navigation, Range, Slider, Spinner } from '@components/index';
+import { Navigation, Range, Slider, Spinner, Loading } from '@components/index';
 
 type Props = {
+  minSlide?: number;
+  maxSlide?: number;
   title: string;
 };
 
-const HistoricalEvents: FC<Props> = ({ title }) => {
+const HistoricalEvents: FC<Props> = ({ title, minSlide = 2, maxSlide = 6 }) => {
   const emptyData = useMemo(() => {
     return [];
   }, []);
 
-  const data = useContext(Context) ?? emptyData;
+  let isLoading = false;
+  let data = useContext(Context) ?? emptyData;
+  const slideAmount = data.length;
+
+  if (minSlide > maxSlide) {
+    const temp = minSlide;
+    minSlide = maxSlide;
+    maxSlide = temp;
+  }
+
+  if (slideAmount < minSlide) {
+    isLoading = true;
+  } else if (slideAmount > maxSlide) {
+    data = data.slice(0, maxSlide);
+  }
 
   const slideData: HistoryData = data[0] ?? {};
   let dataRange: [number, number] | null = null;
@@ -61,25 +77,35 @@ const HistoricalEvents: FC<Props> = ({ title }) => {
   };
 
   return (
-    <section className="historical-events">
-      <h1 className="historical-events__title">{title}</h1>
-      <div className="historical-events__range-wrapper">
-        <Range range={range} delay={80} />
-      </div>
-      <div className="historical-events__spinner-wrapper">
-        <Spinner onChange={handleSpinnerChange} current={currentSlideSpinner} list={data ?? []} />
-      </div>
-      <div className="historical-events__navigation-wrapper">
-        <Navigation
-          onChange={handleNavigationChange}
-          listId={data ?? []}
-          currentSlide={currentSlide}
-        />
-      </div>
-      <div className="historical-events__slider-wrapper">
-        <Slider records={records} title={slideTitle} />
-      </div>
-    </section>
+    <>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <section className="historical-events">
+          <h1 className="historical-events__title">{title}</h1>
+          <div className="historical-events__range-wrapper">
+            <Range range={range} delay={80} />
+          </div>
+          <div className="historical-events__spinner-wrapper">
+            <Spinner
+              onChange={handleSpinnerChange}
+              current={currentSlideSpinner}
+              list={data ?? []}
+            />
+          </div>
+          <div className="historical-events__navigation-wrapper">
+            <Navigation
+              onChange={handleNavigationChange}
+              listId={data ?? []}
+              currentSlide={currentSlide}
+            />
+          </div>
+          <div className="historical-events__slider-wrapper">
+            <Slider records={records} title={slideTitle} />
+          </div>
+        </section>
+      )}
+    </>
   );
 };
 
